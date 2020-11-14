@@ -1,6 +1,8 @@
+using Demo.Services;
 using Demo.Services.Helper;
 using Demo.Services.Queries;
 using Demo.Services.Repository;
+using Demo.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,7 @@ namespace Demo
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IHelper, Helper>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
