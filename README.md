@@ -14,5 +14,3 @@ Create a Web API in .NET Core or .NET that will do the following:
 1. Show all ACCOUNTS
 2. Show an Account by AccountID, AccountName, Snam (Use the same code for this)
 3. Update AccountName for a Snam (don't update all the fields in ACCOUNTS, only update AccountName)
-
-In the next interview, please show us the above 3 items, ie call the Web API with Swagger UI or Postman
