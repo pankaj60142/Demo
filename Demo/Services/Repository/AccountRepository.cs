@@ -15,21 +15,30 @@ namespace Demo.Services.Repository
         {
             _dataContext = dataContext;
         }
-        public async Task<IEnumerable<Accounts>> GetAllAccounts()
+        public async Task<IEnumerable<Account>> GetAllAccounts()
         {
             return await WithConnection( async conn => 
             { 
-                var query = await conn.QueryAsync<Accounts>(_dataContext.GetAllAccounts); 
+                var query = await conn.QueryAsync<Account>(_dataContext.GetAllAccounts); 
                 return query; 
             });
         }
 
-        public async Task UpdateAccountNameBySnam(string accountName, string snam)
+        public async Task UpdateAccountNameBySnam(string newAccountName, string snam)
         {
             await WithConnection(async conn =>
            {
                await conn.ExecuteAsync(_dataContext.UpdateAccountNameBySnam, 
-                   new {AccountName = accountName, Snam = snam });
+                   new {NewAccountName = newAccountName, Snam = snam });
+           });
+        }
+
+        public async ValueTask<Account> GetAccount(string searchInput)
+        {
+            return await WithConnection(async conn =>
+           {
+               var query = await conn.QueryFirstOrDefaultAsync<Account>(_dataContext.GetAccount, new { SearchInput = searchInput });
+               return query;
            });
         }
     }

@@ -36,6 +36,7 @@ namespace Demo.Services
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         protected async Task WithConnection(Func<IDbConnection, Task> getData)
         {
             try

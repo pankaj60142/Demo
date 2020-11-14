@@ -7,7 +7,8 @@ namespace Demo.Services.Repository
 {
     public interface IAccountRepository
     {
-        Task<IEnumerable<Accounts>> GetAllAccounts();
-        Task UpdateAccountNameBySnam(string accountName, string snam);
+        Task<IEnumerable<Account>> GetAllAccounts();
+        ValueTask<Account> GetAccount(string searchInput);
+        Task UpdateAccountNameBySnam(string newAccountName, string snam);
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace Demo
 {
-    public class Accounts
+    public class Account
     {
         public int AccountID { get; set; }
 

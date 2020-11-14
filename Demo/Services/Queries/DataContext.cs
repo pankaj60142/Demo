@@ -9,8 +9,8 @@ namespace Demo.Services.Queries
     {
         public string GetAllAccounts => "SELECT [AccountID], [AccountName], [Snam] FROM [dbo].[ACCOUNTS]";
 
-        public string GetAccount => throw new NotImplementedException();
+        public string GetAccount => "SELECT [AccountID], [AccountName], [Snam] FROM [dbo].[ACCOUNTS] Where AccountID LIKE @SearchInput  OR AccountName Like @SearchInput   OR Snam Like @SearchInput";
 
-        public string UpdateAccountNameBySnam => "UPDATE [ACCOUNTS] SET [AccountName] = @AccountName WHERE [Snam] = @Snam ";
+        public string UpdateAccountNameBySnam => "UPDATE [ACCOUNTS] SET [AccountName] = @NewAccountName WHERE [Snam] = @Snam ";
     }
 }
