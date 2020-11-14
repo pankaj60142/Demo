@@ -11,6 +11,6 @@ namespace Demo.Services.Queries
 
         public string GetAccount => "SELECT [AccountID], [AccountName], [Snam] FROM [dbo].[ACCOUNTS] Where AccountID LIKE @SearchInput  OR AccountName Like @SearchInput   OR Snam Like @SearchInput";
 
-        public string UpdateAccountNameBySnam => "UPDATE [ACCOUNTS] SET [AccountName] = @NewAccountName WHERE [Snam] = @Snam ";
+        public string UpdateAccountNameBySnam => "UPDATE [ACCOUNTS] SET [AccountName] = @NewAccountName WHERE [Snam] = @Snam AND [AccountName] != @NewAccountName";
     }
 }
