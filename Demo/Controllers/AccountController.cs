@@ -1,5 +1,6 @@
 ﻿using Demo.Services.Helper;
 using Demo.Services.Repository;
+using Demo.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -13,13 +14,13 @@ namespace Demo.Controllers
     {
 
         private readonly ILogger<AccountController> _logger;
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountService _accountService;
         private readonly IHelper _helper;
 
-        public AccountController(ILogger<AccountController> logger, IAccountRepository accountRepository, IHelper helper)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IHelper helper)
         {
             _logger = logger;
-            _accountRepository = accountRepository;
+            _accountService = accountService;
             _helper = helper;
         }
 
@@ -27,7 +28,7 @@ namespace Demo.Controllers
         [Route("GetAllAccounts")]
         public async Task<ActionResult<Account>> GetAllAccounts()
         {
-            var accounts = await _accountRepository.GetAllAccounts();
+            var accounts = await _accountService.GetAllAccounts();
             return Ok(accounts);
           
         }
@@ -35,7 +36,7 @@ namespace Demo.Controllers
         [Route("GetAccount")]
         public async Task<ActionResult<Account>> GetAccount(string searchParameter)
         {
-            var account = await _accountRepository.GetAccount(_helper.ValidateInput(searchParameter));
+            var account = await _accountService.GetAccount(_helper.ValidateInput(searchParameter));
             return Ok(account);
         }
         [HttpPut]
@@ -49,10 +50,10 @@ namespace Demo.Controllers
             // Check for Empty Input
             if (!string.IsNullOrEmpty(newAccountName) && !string.IsNullOrEmpty(snam))
             {
-                var account = await _accountRepository.GetAccount(validsnam);
+                var account = await _accountService.GetAccount(validsnam);
                 if (!string.Equals(_helper.ValidateInput(account.AccountName),validNewAccountName))
                 {
-                    await _accountRepository.UpdateAccountNameBySnam(validNewAccountName, snam);
+                    await _accountService.UpdateAccountNameBySnam(validNewAccountName, snam);
                     return Ok();
                 }               
             }
