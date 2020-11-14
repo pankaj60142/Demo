@@ -23,5 +23,14 @@ namespace Demo.Services.Repository
                 return query; 
             });
         }
+
+        public async Task UpdateAccountNameBySnam(string accountName, string snam)
+        {
+            await WithConnection(async conn =>
+           {
+               await conn.ExecuteAsync(_dataContext.UpdateAccountNameBySnam, 
+                   new {AccountName = accountName, Snam = snam });
+           });
+        }
     }
 }

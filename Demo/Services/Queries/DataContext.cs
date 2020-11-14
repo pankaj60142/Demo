@@ -7,10 +7,10 @@ namespace Demo.Services.Queries
 {
     public class DataContext : IDataContext
     {
-        public string GetAllAccounts => "SELECT [AccountID], [AccountName], [Snam] FROM [Demo].[dbo].[ACCOUNTS]";
+        public string GetAllAccounts => "SELECT [AccountID], [AccountName], [Snam] FROM [dbo].[ACCOUNTS]";
 
         public string GetAccount => throw new NotImplementedException();
 
-        public string UpdateAccount => throw new NotImplementedException();
+        public string UpdateAccountNameBySnam => "UPDATE [ACCOUNTS] SET [AccountName] = @AccountName WHERE [Snam] = @Snam ";
     }
 }

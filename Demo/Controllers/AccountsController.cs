@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Demo.Controllers
 {
     [ApiController]
-    [Route("/[Controller]")]
+    [Route("[Controller]")]
     public class AccountsController : ControllerBase
     {
 
@@ -37,11 +37,12 @@ namespace Demo.Controllers
         {
             return new Accounts() { AccountID = 1, AccountName = "Demo", Snam = "SnamDemo" };
         }
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateAccount")]
-        public Accounts UpdateAccount()
+        public async Task<ActionResult<Accounts>> UpdateAccount(string accountName, string snam)
         {
-            return new Accounts() { AccountID = 1, AccountName = "Demo", Snam = "SnamDemo" };
+            await _accountRepository.UpdateAccountNameBySnam(accountName, snam);
+            return Ok();
         }
 
 

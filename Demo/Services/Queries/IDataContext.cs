@@ -9,6 +9,6 @@ namespace Demo.Services.Queries
     {
         string GetAllAccounts { get; }
         string GetAccount { get; }
-        string UpdateAccount { get; }
+        string UpdateAccountNameBySnam { get; }
     }
 }

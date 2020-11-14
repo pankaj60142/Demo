@@ -8,5 +8,6 @@ namespace Demo.Services.Repository
     public interface IAccountRepository
     {
         Task<IEnumerable<Accounts>> GetAllAccounts();
+        Task UpdateAccountNameBySnam(string accountName, string snam);
     }
 }
