@@ -1,8 +1,11 @@
+using Demo.Controllers;
 using Demo.Services;
 using Demo.Services.Helper;
 using Demo.Services.Queries;
 using Demo.Services.Repository;
 using Demo.Services.Services;
+using log4net.Repository;
+using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

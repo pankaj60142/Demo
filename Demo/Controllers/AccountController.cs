@@ -1,8 +1,13 @@
 ﻿using Demo.Services.Helper;
 using Demo.Services.Repository;
 using Demo.Services.Services;
+using log4net;
+using log4net.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 
@@ -16,6 +21,10 @@ namespace Demo.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _accountService;
         private readonly IHelper _helper;
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILoggerRepository _repository = LogManager.GetRepository(Assembly.GetCallingAssembly());
+        private readonly FileInfo fileInfo = new FileInfo(@"log4net.config");
+        
 
         public AccountController(ILogger<AccountController> logger, IAccountService accountService, IHelper helper)
         {
@@ -28,36 +37,81 @@ namespace Demo.Controllers
         [Route("GetAllAccounts")]
         public async Task<ActionResult<Account>> GetAllAccounts()
         {
-            var accounts = await _accountService.GetAllAccounts();
-            return Ok(accounts);
-          
+            try
+            {                
+                log4net.Config.XmlConfigurator.Configure(_repository, fileInfo); 
+                
+                _log.Info("Get All Accounts Action start");
+                var accounts = await _accountService.GetAllAccounts();
+                _log.Info("Get All Accounts Action finished");
+
+                return Ok(accounts);
+            }
+            catch(Exception ex)
+            {
+                _log.Error(ex.Message);
+                return NotFound();
+            }         
         }
         [HttpGet]
         [Route("GetAccount")]
         public async Task<ActionResult<Account>> GetAccount(string searchParameter)
         {
-            var account = await _accountService.GetAccount(_helper.ValidateInput(searchParameter));
-            return Ok(account);
+            try
+            {
+                if (!string.IsNullOrEmpty(searchParameter))
+                {
+                    log4net.Config.XmlConfigurator.Configure(_repository, fileInfo);
+
+                    _log.Info("Get Account Action start");
+                    var account = await _accountService.GetAccount(_helper.ValidateInput(searchParameter));
+                    _log.Info("Get Account Action finished");
+
+                    return Ok(account);
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                return NotFound();
+            }
         }
         [HttpPut]
         [Route("UpdateAccount")]
         public async Task<ActionResult<Account>> UpdateAccount(string newAccountName, string snam)
         {
-            //  Validate Inputs
-            var validNewAccountName = _helper.ValidateInput(newAccountName);
-            var validsnam = _helper.ValidateInput(snam);
-
-            // Check for Empty Input
-            if (!string.IsNullOrEmpty(newAccountName) && !string.IsNullOrEmpty(snam))
+            try
             {
-                var account = await _accountService.GetAccount(validsnam);
-                if (!string.Equals(_helper.ValidateInput(account.AccountName),validNewAccountName))
+                if (!string.IsNullOrEmpty(newAccountName) && !string.IsNullOrEmpty(snam))
                 {
-                    await _accountService.UpdateAccountNameBySnam(validNewAccountName, snam);
-                    return Ok();
-                }               
+                    log4net.Config.XmlConfigurator.Configure(_repository, fileInfo);
+                    //  Validate Inputs
+                    var validNewAccountName = _helper.ValidateInput(newAccountName);
+                    var validsnam = _helper.ValidateInput(snam);
+
+                    // Check for Empty Input
+                    if (!string.IsNullOrEmpty(newAccountName) && !string.IsNullOrEmpty(snam))
+                    {
+                        var account = await _accountService.GetAccount(validsnam);
+                        if (!string.Equals(_helper.ValidateInput(account.AccountName), validNewAccountName))
+                        {
+                            _log.Info("Update Account Action start");
+                            await _accountService.UpdateAccountNameBySnam(validNewAccountName, snam);
+                            _log.Info("Update Account Action start");
+
+                            return Ok();
+                        }
+                    }
+                    return NoContent();
+                }
+                return BadRequest();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                return NotFound();
+            }
         }
     }
 }
