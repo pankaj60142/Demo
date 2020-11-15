@@ -98,7 +98,7 @@ namespace Demo.Controllers
                         {
                             _log.Info("Update Account Action start");
                             await _accountService.UpdateAccountNameBySnam(validNewAccountName, snam);
-                            _log.Info("Update Account Action start");
+                            _log.Info("Update Account Action finished");
 
                             return Ok();
                         }
