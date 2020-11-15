@@ -9,7 +9,11 @@ namespace Demo.Services.Helper
     {
         public string ValidateInput(string input)
         {
-            return input.Trim();
+            if(!string.IsNullOrEmpty(input))
+            {
+                return input.Trim();
+            }
+            return string.Empty;
         }
     }
 }

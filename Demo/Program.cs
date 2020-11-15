@@ -21,6 +21,15 @@ namespace Demo
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureLogging(logging =>
+                {
+                    // clear default logging providers
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                    logging.AddDebug();
+                    logging.AddEventLog();
+                    // add more providers here
                 });
     }
 }
