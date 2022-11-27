@@ -24,3 +24,14 @@ CREATE TABLE [dbo].[Log](
 	[Message] varchar(4000) NOT NULL,
 	[Exception] varchar(2000) NULL
 ) ON [PRIMARY]
+
+Steps to Run API
+
+1. Download Visual Studio community Edition
+2. Download SQL Express
+3. Dowalod Zip file for Code
+4. Open .sln Solution File
+5. Compile and Run
+6. Download Postman
+7. Import Json and test
+
