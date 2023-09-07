@@ -29,9 +29,10 @@ Steps to Run API
 
 1. Download Visual Studio community Edition
 2. Download SQL Express
-3. Dowalod Zip file for Code
-4. Open .sln Solution File
-5. Compile and Run
-6. Download Postman
-7. Import Json and test
+3. Create New Database as "Demo" and create New Table "Accounts" by running Scripts attached
+4. Dowalod Zip file for Code
+5. Open .sln Solution File
+6. Compile and Run
+7. Download Postman
+8. Import Json and test
 
